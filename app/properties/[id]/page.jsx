@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import PropertyDetails from '@/components/PropertyDetails';
 import Spinner from '@/components/Spinner';
+import PropertyImages from '@/components/PropertyImages';
 
 const PropertyPage = () => {
 	const { id } = useParams();
@@ -46,7 +47,7 @@ const PropertyPage = () => {
 			{loading && <Spinner loading={loading} />}
 			{!loading && property && (
 				<>
-					<PropertyHeaderImage image={property.images[0]} />
+					<PropertyHeaderImage image={property.images[1]} />
 					<section>
 						<div className='container m-auto py-6 px-6'>
 							<Link
@@ -143,6 +144,7 @@ const PropertyPage = () => {
 							</div>
 						</div>
 					</section>
+					<PropertyImages images={property.images} />
 				</>
 			)}
 		</>
