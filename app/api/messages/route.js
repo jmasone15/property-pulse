@@ -4,6 +4,31 @@ import { getSessionUser } from '@/utils/getSessionUser';
 
 export const dynamic = 'force-dynamic';
 
+// GET /api/messages
+export const GET = async () => {
+	try {
+		await connectDB();
+		const sessionUser = await getSessionUser();
+
+		if (!sessionUser) {
+			return new Response('User ID is required.', {
+				status: 401
+			});
+		}
+
+		const messages = await Message.find({ recipient: sessionUser.id })
+			.populate('sender', 'username')
+			.populate('property', 'name');
+
+		return new Response(JSON.stringify(messages), { status: 200 });
+	} catch (error) {
+		console.error(error);
+		return new Response('Something went wrong...', {
+			status: 500
+		});
+	}
+};
+
 // POST /api/messages
 export const POST = async (request) => {
 	try {
@@ -14,9 +39,12 @@ export const POST = async (request) => {
 		const sessionUser = await getSessionUser();
 
 		if (!sessionUser) {
-			return new Response('You must be logged in to send a message.', {
-				status: 401
-			});
+			return new Response(
+				JSON.stringify({ message: 'You must be logged in to send a message.' }),
+				{
+					status: 401
+				}
+			);
 		}
 
 		// Cannot send message to self.
