@@ -16,7 +16,11 @@ export const GET = async () => {
 			});
 		}
 
-		const messages = await Message.find({ recipient: sessionUser.id })
+		const messages = await Message.find({
+			recipient: sessionUser.id
+		})
+			.sort({ read: 'asc' })
+			.sort({ createdAt: 'desc' })
 			.populate('sender', 'username')
 			.populate('property', 'name');
 
