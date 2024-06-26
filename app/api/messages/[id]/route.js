@@ -65,7 +65,7 @@ export const DELETE = async (request, { params }) => {
 
 		await message.deleteOne();
 
-		return new Response('Message Deleted', { status: 200 });
+		return new Response(JSON.stringify(message), { status: 200 });
 	} catch (error) {
 		console.error(error);
 		return new Response('Something went wrong...', { status: 500 });
