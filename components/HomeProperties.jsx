@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getProperties } from '@/utils/requests';
 
 const HomeProperties = async () => {
-	const data = await getProperties();
+	const data = (await getProperties()) || [];
 
 	const recentProperties = data.properties
 		.sort(() => Math.random() - Math.random())
