@@ -3,12 +3,13 @@ import Link from 'next/link';
 import { getProperties } from '@/utils/requests';
 
 const HomeProperties = async () => {
-	const data = (await getProperties()) || [];
+	const data = await getProperties();
+	console.log(data.properties);
 
 	const recentProperties =
-		getProperties.length > 0
-			? data.properties.sort(() => Math.random() - Math.random()).slice(0, 3)
-			: data.properties;
+		data.properties === undefined
+			? []
+			: data.properties.sort(() => Math.random() - Math.random()).slice(0, 3);
 
 	return (
 		<>
