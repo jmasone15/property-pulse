@@ -6,9 +6,8 @@ export const GET = async (request) => {
 	try {
 		await connectDB();
 
-		const { searchParams } = new URL(request.url);
-		const location = searchParams.get('location');
-		const propertyType = searchParams.get('propertyType');
+		const location = request.nextUrl.searchParams.get('location');
+		const propertyType = request.nextUrl.searchParams.get('propertyType');
 
 		// Match locationPattern against database fields.
 		const locationPattern = new RegExp(location, 'i');
